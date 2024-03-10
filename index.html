@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <?!= HtmlService.createHtmlOutputFromFile('css').getContent(); ?>
+    <base target="_top">
+  </head>
+  <body>
+    <br>
+    <p class="title" id="title"><?=title ?></p>
+    <br><br>
+    <div class="user">　<?=user_number ?> <?=user_name ?> さん</div>
+    <br>
+    <div><p id="score"><?=lesson_0 ?></p>
+      <table class="table" cellspacing="0">
+        <tr>
+          <td class="td" id="chigi"></td>
+          <td class="td" id="shihanhyo"></td>
+          <td class="td" id="syugakutai"></td>
+          <td class="td">欠席</td>
+        </tr>
+        <tr>
+          <td><div class="score" id="kScore_0"></div></td>
+          <td><div class="score" id="tScore_0"></div></td>
+          <td><div class="score" id="aScore_0"></div></td>
+          <td><div class="score" id="absence_0"><?=absence_0 ?>  回</div></td>
+        </tr>
+      </table>
+      <table class="table" cellspacing="0">
+        <tr>
+          <td class="td" id="kanten1"></td>
+          <td class="td" id="kanten2"></td>
+          <td class="td" id="kanten3"></td>
+          <td class="td" id="hyotei"></td>
+        </tr>
+        <tr>
+          <td><div class="score" id="kPerspective_0"></div></td>
+          <td><div class="score" id="tPerspective_0"></div></td>
+          <td><div class="score" id="aPerspective_0"></div></td>
+          <td><div class="score" id="rating_0"></div></td>
+        </tr>
+      </table>
+      <br>
+      <table>
+        <tr>
+          <div class="info">
+            １．次の実施した点数を入れて算出した。（　）は加算された観点を示している。
+          </div>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <div class="info">
+            <td class="info-addition">
+              <div class="gt" id="gt_0"></div>
+            </td>
+          </div>
+        </tr>
+      </table>
+      <br>
+      <table>
+        <tr>
+          <div class="info" id="info"></div>
+        </tr>
+        <br>
+        <tr>
+          <div class="info">
+          ３．各点数はあくまで仮である。最終的には総合的に判断して成績を出す。
+          </div>
+        </tr>
+        <br>
+        <tr>
+          <div class="info">
+            ４．あくまで途中経過を知らせるものであり、成績を保証するものではない。
+          </div>
+        </tr>
+        <br>
+        <tr>
+          <div class="info">
+            ５．観点の割合は、【A+：90%以上、A:70%以上、B:50%以上、C+:30%以上、C:30%未満】である。
+          </div>
+        </tr>
+        <br>
+        <tr>
+          <div class="info" id="finalInfo">
+            ６．学年（最終的な）成績は、以下の予想である（３学期になったら表示される）。
+          </div>
+        </tr>
+        <table class="table" cellspacing="0" id="finalTable">
+          <tr>
+            <td class="td" id="kanten1">知技</td>
+            <td class="td" id="kanten2">思判表</td>
+            <td class="td" id="kanten3">主学態</td>
+            <td class="td" id="hyotei">評定</td>
+            <td class="td">欠席</td>
+          </tr>
+          <tr>
+            <td><?=kPerspective_final ?></td>
+            <td><?=tPerspective_final ?></td>
+            <td><?=aPerspective_final ?></td>
+            <td><?=rating_final ?></td>
+            <td><?=absence_final ?></td>
+          </tr>
+        </table>  
+      </table>
+    </div>
+  </body>
+
+  <script>
+    document.getElementById("gt_0").innerText = <?=gt_0 ?>.replace(/\n/g, '\n')
+
+    const kRawScore_0 = Math.round(<?=kRawScore_0 ?>) * 10 / 10;
+    const kMaxScore_0 = <?=kMaxScore_0 ?>;
+    const kRawPercentage_0 = Math.round(<?=kRawPercentage_0 ?>) * 10 / 10;
+    const kExpectedPercentage_0 = Math.round(<?=kExpectedPercentage_0 ?>) * 10 / 10;
+    if (<?=lesson_0 ?> == <?=semester ?> + " のほぼ確定の成績") {
+      document.getElementById("kScore_0").innerText = kRawScore_0 + " /" + kMaxScore_0 + "　：　" + kRawPercentage_0 + "%";
+      document.getElementById("kPerspective_0").innerText = <?=kRawPerspective_0 ?> + <?=kNextPerspective_0 ?> + <?=kNextScore_0 ?>;
+    } else {
+      document.getElementById("kScore_0").innerText = kRawScore_0 + " /" + kMaxScore_0 + "　：　" + kRawPercentage_0 + "%\n\n（" + kExpectedPercentage_0 + "%）";
+      document.getElementById("kPerspective_0").innerText = <?=kRawPerspective_0 ?> + <?=kNextPerspective_0 ?> + <?=kNextScore_0 ?> + "\n" + "\n" + "（" + <?=kExpectedPerspective_0 ?> + "）";
+    }
+
+    const tRawScore_0 = Math.round(<?=tRawScore_0 ?>) * 10 / 10;
+    const tMaxScore_0 = <?=tMaxScore_0 ?>;
+    const tRawPercentage_0 = Math.round(<?=tRawPercentage_0 ?>) * 10 / 10;
+    const tExpectedPercentage_0 = Math.round(<?=tExpectedPercentage_0 ?>) * 10 / 10;
+    if (<?=lesson_0 ?> == <?=semester ?> + " のほぼ確定の成績") {
+      document.getElementById("tScore_0").innerText = tRawScore_0 + " /" + tMaxScore_0 + "　：　" + tRawPercentage_0 + "%";
+      document.getElementById("tPerspective_0").innerText = <?=tRawPerspective_0 ?> + <?=tNextPerspective_0 ?> + <?=tNextScore_0 ?>;
+    } else {
+      document.getElementById("tScore_0").innerText = tRawScore_0 + " /" + tMaxScore_0 + "　：　" + tRawPercentage_0 + "%\n\n（" + tExpectedPercentage_0 + "%）";
+      document.getElementById("tPerspective_0").innerText = <?=tRawPerspective_0 ?> + <?=tNextPerspective_0 ?> + <?=tNextScore_0 ?> + "\n" + "\n" + "（" + <?=tExpectedPerspective_0 ?> + "）";
+    }
+
+    const aRawScore_0 = Math.round(<?=aRawScore_0 ?>) * 10 / 10;
+    const aMaxScore_0 = <?=aMaxScore_0 ?>;
+    const aRawPercentage_0 = Math.round(<?=aRawPercentage_0 ?>) * 10 / 10;
+    const aExpectedPercentage_0 = Math.round(<?=aExpectedPercentage_0 ?>) * 10 / 10;
+    if (<?=lesson_0 ?> == <?=semester ?> + " のほぼ確定の成績") {
+      document.getElementById("aScore_0").innerText = aRawScore_0 + " /" + aMaxScore_0 + "　：　" + aRawPercentage_0 + "%";
+      document.getElementById("chigi").innerText = "知技";
+      document.getElementById("shihanhyo").innerText = "思判表";
+      document.getElementById("syugakutai").innerText = "主学態";
+      document.getElementById("kanten1").innerText = "知技";
+      document.getElementById("kanten2").innerText = "思判表";
+      document.getElementById("kanten3").innerText = "主学態";
+      document.getElementById("hyotei").innerText = "評定";
+      document.getElementById("rating_0").innerText = <?=rawRating_0 ?>;
+      document.getElementById("info").innerText = "２．" + <?=semester ?> + "中に行われた" + <?=all ?> + "回の【振り返りテスト】、【単元テスト】、【Goal Task】から算出した。";
+      if (<?=aNextScore_0 ?> == "5点）" || <?=aNextScore_0 ?> == "4点）" || <?=aNextScore_0 ?> == "3点）" || <?=aNextScore_0 ?> == "2点）" || <?=aNextScore_0 ?> == "1点）") {
+        document.getElementById("aPerspective_0").innerText = <?=aRawPerspective_0 ?> + <?=aNextPerspective_0 ?> + <?=aNextScore_0 ?> //+ "\n\n 【提出物対象者】";
+      } else {
+        document.getElementById("aPerspective_0").innerText = <?=aRawPerspective_0 ?> + <?=aNextPerspective_0 ?> + <?=aNextScore_0 ?>;
+      }
+    } else {
+      document.getElementById("aScore_0").innerText = aRawScore_0 + " /" + aMaxScore_0 + "　：　" + aRawPercentage_0 + "%\n\n（" + aExpectedPercentage_0 + "%）";
+      document.getElementById("chigi").innerText = "知技\n\n（予想）";
+      document.getElementById("shihanhyo").innerText = "思判表\n\n（予想）";
+      document.getElementById("syugakutai").innerText = "主学態\n\n（予想）";
+      document.getElementById("kanten1").innerText = "知技\n\n（予想）";
+      document.getElementById("kanten2").innerText = "思判表\n\n（予想）";
+      document.getElementById("kanten3").innerText = "主学態\n\n（予想）";
+      document.getElementById("hyotei").innerText = "評定\n\n（予想）";
+      document.getElementById("aPerspective_0").innerText = <?=aRawPerspective_0 ?> + <?=aNextPerspective_0 ?> + <?=aNextScore_0 ?> + "\n" + "\n" + "（" + <?=aExpectedPerspective_0 ?> + "）";
+      document.getElementById("rating_0").innerText = <?=rawRating_0 ?> + "\n" + "\n（" + <?=expectedRating_0 ?> + "）";
+      document.getElementById("info").innerText = "２．" + <?=semester ?> + "中に【振り返りテスト】、【単元テスト】、【Goal Task】が" + <?=all ?> + "回あると仮定して算出している。";
+    }
+
+    if (<?=rating_final ?> == "") {
+      document.getElementById("finalTable").style.display = "none";
+      document.getElementById("finalInfo").style.display = "none";
+    } else {
+      document.getElementById("finalTable").style.display = "block";
+      document.getElementById("finalInfo").style.display = "block";
+    }
+  </script>
+</html>
